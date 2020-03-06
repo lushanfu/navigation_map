@@ -1,22 +1,6 @@
 from enum import Enum,unique
 import sqlhelper
 
-# class Object():
-#     def __init__(self):
-#         self.__previous=None
-#         self.__next=None
-#
-#     def setPre(self,pre):
-#         self.__previous=pre
-#
-#     def getPre(self):
-#         return self.__previous
-#
-#     def setNext(self,next):
-#         self.__next=next
-#
-#     def getNext(self):
-#         return self.__next
 
 class tower():
     def __init__(self):
