@@ -109,6 +109,7 @@ class compoundMapSegment():
         self.preTower=preTower
         self.nextTower=nextTower
         self.compoundCircuit=compoundCircuit
+        self.number=self.compoundCircuit.circuit.serialNumber
     def __repr__(self):
         return repr(self.preTower,self.nextTower,self.compoundCircuit)
 #task type enum value

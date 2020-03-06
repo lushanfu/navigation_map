@@ -2,6 +2,7 @@ from utils import *
 
 
 def routeQuery(beginTower,endTower):
+
     ret=judgeMapRouteIsExist(beginTower,endTower)
     mapRoute=[]
     if ret>=0:
@@ -11,6 +12,7 @@ def routeQuery(beginTower,endTower):
         #TODO query map from db  and convert jsonStr to object
         pass
     else:
+      if beginTower < endTower:
         flag = judgeTowerIsExist(beginTower, endTower)
         if flag == -2:
             print("Check again,and input right beingTowerSerialNumber and endTowerSerialNumber please!")
@@ -23,20 +25,26 @@ def routeQuery(beginTower,endTower):
             return
         # query all tower by input beginTower and endTower
         # difined a pre and bp list
+
         preTowerList = [beginTower]
         bpTowerList = [endTower]
         mapRoute = queryMiddleTower(preTowerList, bpTowerList)
         print("total circuits segment number is :", len(mapRoute))
+      else:
+       mapRoute=reverseMapQuery(beginTower,endTower)
+
     return mapRoute
 
 #load mapdata from local sd
 def offLineMapLoad(filePath):
     mapStr=loadMapDataFromFile(filePath)
+    #TODO reserialize str to obj
     print(mapStr)
 
-
+#recify exist routeMap
 def rectifyRoute():
     pass
+
 
 def mapDownload(filePath,content=''):
     filePath=filePath+'/map.txt'
@@ -63,7 +71,8 @@ def mapUpdate():
     pass
 
 
-# mapLi=routeQuery(1,6)
+mapLi=routeQuery(7,2)
+backRouteMap(mapLi)
 # jsonStr=parseObjToJson(mapLi)
 # saveMapToDB(1,7,'second_map',jsonStr)
 # parseJsonToObj(jsonStr)

@@ -2,6 +2,7 @@ import model
 import sqlhelper
 import json
 import os
+
 def parseJsonToObj(jsonStr):
     obj=json.loads(jsonStr)
     return  obj
@@ -203,7 +204,42 @@ def saveMapToDB(beginNum,endNum,title,mapData):
     return
 
 
-def reverseMapQuery():
+def reverseMapQuery(beginTower,endTower):
+    #beginTower>endTower
+
+    flag = judgeTowerIsExist(beginTower, endTower)
+    if flag == -2:
+        print("Check again,and input right beingTowerSerialNumber and endTowerSerialNumber please!")
+        return
+    if flag == -1:
+        print("Check again,and input right beingTowerSerialNumber please!")
+        return
+    if flag == 0:
+        print("Check again,and input right endTowerSerialNumber please!")
+        return
+    # query all tower by input beginTower and endTower
+    # difined a pre and bp list
+
+    preTowerList = [endTower]
+    bpTowerList = [beginTower]
+    mapRoute = queryMiddleTower(preTowerList, bpTowerList)
+    print("total circuits segment number is :", len(mapRoute))
+    return backRouteMap(mapRoute)
+
+
+
+
+
+
     #TODO reverse routeMap query  and gen mapData
     pass
+
+def backRouteMap(mapLi):
+    mapLi.reverse()
+    for i in mapLi:
+        temp=i.preTower
+        i.preTower=i.nextTower
+        i.nextTower=temp
+        i.compoundCircuit.toolList.reverse()
+    return mapLi
 
