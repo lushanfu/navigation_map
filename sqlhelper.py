@@ -39,7 +39,6 @@ class sqlHelper():
         # self.__conn.close()
         #print('xigou')
 
-
 class dbcrud():
     def __init__(self):
         self.sqlO=sqlObj()
@@ -66,10 +65,6 @@ class dbcrud():
         sql="insert into routeMaps(serialNumber,title,routeIsExist,beginTower,endTower,mapData,distance,obstacleNum,towerNum,powerNum) value("+str(routeMap.serialNumber)+','+"'"+routeMap.title+"',"+str(routeMap.routeIsExist)+','+str(routeMap.beginTower)+','+str(routeMap.endTower)+','+"'"+str(routeMap.mapData)+"',"+str(routeMap.distance)+','+str(routeMap.obstacleNum)+','+str(routeMap.towerNum)+','+str(routeMap.powerNum)+")"
         self.sqlH.addData(sql)
 
-
-
-
-
     def updateTowers(self,tower,condition):
         pass
     def deleteTowers(self):
@@ -90,46 +85,5 @@ class dbcrud():
 
 
 
-# lineTool=model.lineTool()
-# lineTool.serialNumber=14
-# lineTool.title='14_fzc'
-# lineTool.type=0
-# lineTool.lineSerialNum=7
-# lineTool.preTower=7
-# lineTool.nextTower=8
-# lineTool.preObstacle=13
-# lineTool.nextObstacle=-1
-# dbOp.insert2LineTools(lineTool)
-
-# circuit=model.circuit()
-# circuit.serialNumber=7
-# circuit.title='seven_circuit'
-# circuit.type=0
-# circuit.preTower=7
-# circuit.nextTower=8
-# dbOp.insert2Circuits(circuit)
-
-
-
-
-
-
-
-# tower=model.tower()
-# tower.serialNum=8
-# tower.title='eight_tower'
-# tower.towerType=0
-# tower.longitude=0.0
-# tower.latitude=1.0
-# tower.preTower=7
-# tower.nextTower=-1
-# tower.crossLineType=0
-# # tower.preLine=""
-# tower.nextLine=1
-# tower.towerHeight=60.0
-# # tower.branch01=""
-# # tower.branch02=""
-# # tower.branch03=""
-# dbOp.insert2Towers(tower)
 
 
