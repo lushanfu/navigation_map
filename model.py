@@ -2,7 +2,7 @@ from enum import Enum,unique
 import sqlhelper
 
 
-class tower():
+class Tower:
     def __init__(self):
         self.serialNum=-1
         self.title=None
@@ -21,7 +21,7 @@ class tower():
     def __repr__(self):
         return repr(self.serialNum,self.title,self.towerType,self.longitude,self.latitude,self.preTower,self.nextTower,self.crossLineType,self.preLine,self.nextLine,self.towerHeight,self.branch01,self.branch02,self.branch03)
 
-class lineTool():
+class LineTool:
     def __init__(self,serialNumber,title = None,type=-1,longitude=-1,latitude=-1,lineSerialNum=-1,preTower=-1,nextTower=-1,preObstacle=-1,nextObstacle=-1,length=-1,cruiseFlag=-1):
         self.serialNumber = serialNumber
         self.title = title
@@ -38,7 +38,7 @@ class lineTool():
     def __repr__(self):
         return repr(self.serialNumber,self.title,self.type,self.longitude,self.latitude,self.lineSerialNum,self.preTower,self.nextTower,self.preObstacle,self.nextObstacle,self.length,self.cruiseFlag)
 
-class pointTool():
+class PointTool:
     def __init__(self):
         self.serialNumber = None
         self.title = None
@@ -55,7 +55,7 @@ class pointTool():
     def __repr__(self):
         return repr(self.serialNumber,self.title,self.type,self.longitude,self.latitude,self.lineSerialNum,self.preTower,self.nextTower,self.preObstacle,self.nextObstacle,self.relativeCoord01,self.relativeCoord02)
 
-class circuit():
+class Circuit:
     def __init__(self,serialNumber=-1,title = None,type = -1,preTower=-1,nextTower=-1,obstacleNum=0,directionAngle=0,relativeCoord01=-1,relativeCoord02=-1):
         self.serialNumber = serialNumber
         self.title    = title
@@ -70,7 +70,7 @@ class circuit():
         return repr(self.serialNumber,self.title,self.type,self.preTower,self.nextTower,self.obstacleNum,self.directionAngle,self.relativeCoord01,self.relativeCoord02)
 
 #special navigation route
-class routeMap():
+class RouteMap:
     def __init__(self,serialNumber=None,title=None,routeIsExist=None,beginTower=None,endTower=None,mapData=None,distance=0,towerNum=0,powerNum=0,obstacleNum=0):
         self.serialNumber=serialNumber
         self.title=title
@@ -85,7 +85,7 @@ class routeMap():
     def __repr__(self):
         return repr(self.serialNumber,self.title,self.beginTower,self.endTower,self.mapData,self.distance,self.towerNum,self.powerNum,self.obstacleNum)
 
-class compoundCircuit():
+class CompoundCircuit:
     def __init__(self,circuit):
         self.circuit=circuit
         self.toolList=self.setAllTools()
@@ -100,11 +100,11 @@ class compoundCircuit():
             data =dbOp.queryData('lineTools','serialNumber,title,type,longitude,latitude,lineSerialNum,preTower,nextTower,preObstacle,nextObstacle,length,cruiseFlag',condition);
             if len(data)>0:
                 for i in data:
-                    tool=lineTool(serialNumber=i[0],title=i[1],type=i[2],longitude=i[3],latitude=i[4],lineSerialNum=i[5],preTower=i[6],nextTower=i[7],preObstacle=i[8],nextObstacle=i[9],length=i[10],cruiseFlag=i[11])
+                    tool=LineTool(serialNumber=i[0],title=i[1],type=i[2],longitude=i[3],latitude=i[4],lineSerialNum=i[5],preTower=i[6],nextTower=i[7],preObstacle=i[8],nextObstacle=i[9],length=i[10],cruiseFlag=i[11])
                     toolsList.append(tool)
         return toolsList
 
-class compoundMapSegment():
+class CompoundMapSegment:
     def __init__(self,preTower,nextTower,compoundCircuit):
         self.preTower=preTower
         self.nextTower=nextTower
@@ -124,6 +124,20 @@ class TaskType(Enum):
     seven=6
 
 class JSONObject:
-  def __init__(self, d):
+    def __init__(self, d):
      self.__dict__ = d
+
+# GPS位置数据类型
+class LocationMsg:
+    def __init__(self,longitude=-1,latitude=-1):
+        self.longitude=longitude
+        self.latitude=latitude
+    def __repr__(self):
+        return repr(self.longitude,self.latitude)
+
+#TODO GPS卫星数据类型
+class GPSMsg:
+    def __init__(self,GPGSV,GPGLL,GORMC,GPVTG,GPGGA,GPGSA):
+        pass
+
 

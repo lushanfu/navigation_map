@@ -27,7 +27,6 @@ def loadMapDataFromFile(filePath):
             mapStr=f.read()
             return mapStr
 
-
 def judgeTowerIsExist(beginTower,endTower):
     dbOp=sqlhelper.dbcrud()
     ret1=dbOp.queryData('towers','id','serialNumber='+str(beginTower))
@@ -57,7 +56,7 @@ def preQueryMiddleTower(begin, end, preTowerList):
     while(True):
 
         data=dbOp.queryData('towers', 'nextTower,branch01,branch02,branch03,towerType,longitude,latitude,crossLineType,serialNumber,title', 'serialNumber='+str(counter))[0]
-        t = model.tower()
+        t = model.Tower()
         t.serialNum=data[8]
         t.nextTower=data[0]
         t.branch01=data[1]
@@ -82,7 +81,7 @@ def preQueryMiddleTower(begin, end, preTowerList):
                                   'nextTower,branch01,branch02,branch03,towerType,longitude,latitude,crossLineType,serialNumber,title',
                                   'serialNumber=' + str(end))
             data=data[0]
-            t = model.tower()
+            t = model.Tower()
             t.serialNum = data[8]
             t.nextTower = data[0]
             t.branch01 = data[1]
@@ -104,7 +103,7 @@ def bpQueryMiddleTower(begin, end, bpTowerList):
     counter = end
     while (True):
         data = dbOp.queryData('towers', 'preTower,branch01,branch02,branch03,towerType,longitude,latitude,crossLineType,serialNumber,title', 'serialNumber=' + str(counter))[0]
-        t = model.tower()
+        t = model.Tower()
         t.serialNum = data[8]
         t.preTower = data[0]
         t.branch01 = data[1]
@@ -128,7 +127,7 @@ def bpQueryMiddleTower(begin, end, bpTowerList):
             data = dbOp.queryData('towers',
                                   'preTower,branch01,branch02,branch03,towerType,longitude,latitude,crossLineType,serialNumber,title',
                                   'serialNumber=' + str(begin))[0]
-            t = model.tower()
+            t = model.Tower()
             t.serialNum = data[8]
             t.nextTower = data[0]
             t.branch01 = data[1]
@@ -143,7 +142,7 @@ def bpQueryMiddleTower(begin, end, bpTowerList):
             break
     return towerData
 
-def GenMapSeg(towerData):
+def genMapSeg(towerData):
     dbOp=sqlhelper.dbcrud()
     begin=towerData[0].serialNum
     mapList=[]
@@ -156,10 +155,10 @@ def GenMapSeg(towerData):
 
 
         #use compoundCircuit object to load
-        circuit=model.circuit(serialNumber=data[0],title=data[1],type=data[2],obstacleNum=data[3],directionAngle=data[4],relativeCoord01=data[5],relativeCoord02=data[6],preTower=data[7],nextTower=data[8])
+        circuit=model.Circuit(serialNumber=data[0],title=data[1],type=data[2],obstacleNum=data[3],directionAngle=data[4],relativeCoord01=data[5],relativeCoord02=data[6],preTower=data[7],nextTower=data[8])
 
-        compoundCircuit=model.compoundCircuit(circuit)
-        mapSegment=model.compoundMapSegment(preTower=towerData[i-1],nextTower=towerData[i],compoundCircuit=compoundCircuit)
+        compoundCircuit=model.CompoundCircuit(circuit)
+        mapSegment=model.CompoundMapSegment(preTower=towerData[i-1],nextTower=towerData[i],compoundCircuit=compoundCircuit)
         mapList.append(mapSegment)
         begin = next
     return mapList
@@ -186,13 +185,13 @@ def queryMiddleTower(preTowerList, bpTowerList):
         towerData=towerData1+towerData2
         
     #construct mapSegment
-    return GenMapSeg(towerData)
+    return genMapSeg(towerData)
 
 def saveMapToDB(beginNum,endNum,title,mapData):
     serialNum=str(beginNum)+'2020'+str(endNum)
     serialNum=int(serialNum)
 
-    routeMap=model.routeMap(serialNumber=serialNum,title=title,beginTower=beginNum,endTower=endNum,routeIsExist=1,mapData=mapData)
+    routeMap=model.RouteMap(serialNumber=serialNum,title=title,beginTower=beginNum,endTower=endNum,routeIsExist=1,mapData=mapData)
     dbOp=sqlhelper.dbcrud()
 
     data=dbOp.queryData('routeMaps','id','serialNumber='+str(serialNum))
@@ -202,7 +201,6 @@ def saveMapToDB(beginNum,endNum,title,mapData):
     dbOp.insert2RouteMaps(routeMap)
     print('save routeMap success!')
     return
-
 
 def reverseMapQuery(beginTower,endTower):
     #beginTower>endTower
@@ -226,14 +224,6 @@ def reverseMapQuery(beginTower,endTower):
     print("total circuits segment number is :", len(mapRoute))
     return backRouteMap(mapRoute)
 
-
-
-
-
-
-    #TODO reverse routeMap query  and gen mapData
-    pass
-
 def backRouteMap(mapLi):
     mapLi.reverse()
     for i in mapLi:
@@ -242,6 +232,18 @@ def backRouteMap(mapLi):
         i.nextTower=temp
         i.compoundCircuit.toolList.reverse()
     return mapLi
+
+#get gps message from rk3399
+def getGpsMsg():
+    pass
+
+#parse gps message from gps databag
+def gpsMsgParse():
+    pass
+
+def calculateDisByGps():
+    pass
+
 
 
 
