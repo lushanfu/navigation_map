@@ -4,7 +4,7 @@ import json
 import os
 
 def parseJsonToObj(jsonStr):
-    obj=json.loads(jsonStr)
+    obj=json.loads(jsonStr,object_hook=model.JSONObject)
     return  obj
 
 def parseObjToJson(obj):
@@ -242,4 +242,7 @@ def backRouteMap(mapLi):
         i.nextTower=temp
         i.compoundCircuit.toolList.reverse()
     return mapLi
+
+
+
 

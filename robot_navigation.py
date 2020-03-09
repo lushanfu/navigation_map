@@ -38,8 +38,8 @@ def routeQuery(beginTower,endTower):
 #load mapdata from local sd
 def offLineMapLoad(filePath):
     mapStr=loadMapDataFromFile(filePath)
-    #TODO reserialize str to obj
-    print(mapStr)
+    obj=parseJsonToObj(mapStr)
+    return obj
 
 #recify exist routeMap
 def rectifyRoute():
@@ -80,3 +80,4 @@ backRouteMap(mapLi)
 
 #mapDownload('/home/lsf',jsonStr)
 offLineMapLoad('/home/lsf/map.txt')
+pass

@@ -110,6 +110,7 @@ class compoundMapSegment():
         self.nextTower=nextTower
         self.compoundCircuit=compoundCircuit
         self.number=self.compoundCircuit.circuit.serialNumber
+
     def __repr__(self):
         return repr(self.preTower,self.nextTower,self.compoundCircuit)
 #task type enum value
@@ -121,4 +122,8 @@ class TaskType(Enum):
     five=4
     six=5
     seven=6
+
+class JSONObject:
+  def __init__(self, d):
+     self.__dict__ = d
 
