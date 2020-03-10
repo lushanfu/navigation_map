@@ -246,5 +246,24 @@ def calculateDisByGps():
 
 
 
+def buildContext(objList):
+    l=len(objList)
+    for i in range(0,l):
+        if i==0:
+            objList[0].preObj=-1
+            objList[0].nextObj=objList[1]
+            continue
+        if i==l-1:
+            objList[i].preObj=objList[i-1]
+            objList[i].nextObj=-1
+            continue
+        else:
+            objList[i].preObj=objList[i-1]
+            objList[i].nextObj=objList[i+1]
+
+
+
+
+
 
 

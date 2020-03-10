@@ -123,6 +123,14 @@ class TaskType(Enum):
     six=5
     seven=6
 
+
+class ObjType(Enum):
+    tower=0
+    lineTool01=1
+    lineTool02=2
+    pointTool=3
+
+
 class JSONObject:
     def __init__(self, d):
      self.__dict__ = d
@@ -139,5 +147,19 @@ class LocationMsg:
 class GPSMsg:
     def __init__(self,GPGSV,GPGLL,GORMC,GPVTG,GPGGA,GPGSA):
         pass
+
+
+class MapSegWidget:
+    def __init__(self,type,name,serialNum,longitude,latitude,preObj=-1,nextObj=-1,length=-1,isPassed=False):
+
+        self.name=name
+        self.type=type
+        self.serialNum=serialNum
+        self.longitude=longitude
+        self.latitude=latitude
+        self.preObj=preObj
+        self.nextObj=nextObj
+        self.length=length
+        self.isPassed=isPassed
 
 
