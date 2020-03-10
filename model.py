@@ -162,4 +162,13 @@ class MapSegWidget:
         self.length=length
         self.isPassed=isPassed
 
+#TODO 设置导航提醒的距离枚举
+class NavigationRemidDis(Enum):
+    arrive=0
+    close=1
+    near=2
+
+
+
+
 

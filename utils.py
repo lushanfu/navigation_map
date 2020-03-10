@@ -2,6 +2,7 @@ import model
 import sqlhelper
 import json
 import os
+import numpy as np
 
 def parseJsonToObj(jsonStr):
     obj=json.loads(jsonStr,object_hook=model.JSONObject)
@@ -233,16 +234,33 @@ def backRouteMap(mapLi):
         i.compoundCircuit.toolList.reverse()
     return mapLi
 
-#get gps message from rk3399
+
+#TODO get gps message from rk3399
 def getGpsMsg():
     pass
 
-#parse gps message from gps databag
+
+#TODO parse gps message from gps databag
 def gpsMsgParse():
     pass
 
-def calculateDisByGps():
-    pass
+#计算两个位置的距离
+def calculateDisByGps(robotLoc,lng2,lat2):
+    lng1=robotLoc.longitude
+    lat1=robotLoc.latitude
+    earthradius=6371393
+    lng1=lng1*np.pi/180.0
+    lat1=lat1*np.pi/180.0
+    lng2=lng2*np.pi/180.0
+    lat2=lat2*np.pi/180.0
+
+    calcLongitude=np.abs(lng2-lng1)
+    calcLatitude =np.abs(lat2-lat1)
+
+    stepOne=pow(np.sin(calcLatitude/2),2)+np.cos(lat1)*np.cos(lat2)*pow(np.sin(calcLongitude/2),2)
+    stepTwo=2*np.arcsin(min(1,np.sqrt(stepOne)))
+    dis=earthradius*stepTwo
+    return dis
 
 
 

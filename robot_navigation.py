@@ -108,29 +108,20 @@ def navigation(navigationFlag):
         buildContext(objList)
         for obj in range(0,len(objList)):
             if obj==0:
+                objList[obj].isPassed=True
                 passedObj.append(objList[obj])
                 continue
             #calculate distance of robot  and object
             while(True):
                 robotLoc=gpsMsgParse()
-                dis=calculateDisByGps()
+                dis=calculateDisByGps(robotLoc,objList[obj].longitude,objList[obj].latitude)
                 if dis<=2:#当机器人与障碍物的距离小于两米的时候，交由视觉来处理。
                     #TODO 当机器人与障碍物距离到达一定阈值时候，进行视觉辅助，导航不再处理（通知下个障碍物的距离，及三米范围为障碍物的个数）。
                     break
-
-
-
+            objList[obj].isPassed=True
+            passedObj.append(objList[obj])
         i+=1
 
-
-
-
-
-    #query from mapData and calculate the location on  the map
-
-    #navigation_tip
-
-    pass
 
 def mapUpdate():
     pass
